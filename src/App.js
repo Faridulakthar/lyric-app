@@ -1,22 +1,26 @@
 import React from 'react';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
-import './app.css';
+
 import Navbar from './components/layout/Navbar';
 import Index from './components/layout/Index';
+import Lyrics from './components/tracks/Lyrics'
+
+
 import { ContextController } from './context';
 
 const App = () => {
   return (
     <ContextController>
       <Router>
-        <React.Fragment>
+        <>
           <Navbar />
           <div className="container">
             <Routes>
               <Route exact path="/" element={<Index />} />
+              <Route exact path="/lyrics/track/:id" element={<Lyrics />} />
             </Routes>
           </div>
-        </React.Fragment>
+        </>
       </Router>
     </ContextController>
   );
