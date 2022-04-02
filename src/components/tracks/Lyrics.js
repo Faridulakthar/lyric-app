@@ -10,25 +10,24 @@ const Lyrics = (props) => {
   const [track, setTrack] = useState({});
   const [lyrics, setLyrics] = useState({});
 
+
   useEffect(() => {
     axios
       .get(
-        `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=${id}&apikey=${process.env.REACT_APP_MM_KEY}`
+        `http://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=${id}&apikey=${process.env.REACT_APP__MM_KEY}`
       )
-      .then((res) => {
+      .then(async (res) => {
         // console.log(res.data);
         let lyrics = res.data.message.body.lyrics;
-        setLyrics({ lyrics });
+        setLyrics( lyrics );
 
-        return axios
+        const res_1 = await axios
           .get(
-            `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.get?track_id=${id}&apikey=${process.env.REACT_APP_MM_KEY}`
-          )
-          .then((res) => {
-            console.log(res.data);
-            let track = res.data.message.body.track;
-            setTrack({ track });
-          });
+            `http://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/track.get?track_id=${id}&apikey=${process.env.REACT_APP__MM_KEY}`
+          );
+        // console.log(res_1.data);
+        let track = res_1.data.message.body.track;
+        setTrack({ track });
       })
       .catch((err) => console.log(err));
   }, [id]);
@@ -72,10 +71,8 @@ const Lyrics = (props) => {
             {track.track.explicit === 0 ? 'No' : 'Yes'}
           </li>
           <li className="list-group-item">
-            <strong>Release Date</strong>:{' '}
-            {/* <Moment format="MM/DD/YYYY">
-              {track.track.first_release_date}
-            </Moment> */}
+            <strong>Release Date</strong>:{' '} 
+            {track.track.first_release_date}
           </li>
         </ul>
       </>

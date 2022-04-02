@@ -6,7 +6,7 @@ export const Context = React.createContext();
 export const ContextController = ({ children }) => {
   let initialState = {
     track_list: [],
-    heading: 'Top 10 Tracks',
+    heading: '',
   };
 
   const [state, setState] = useState(initialState);
@@ -14,7 +14,7 @@ export const ContextController = ({ children }) => {
   useEffect(() => {
     axios
       .get(
-        `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/chart.tracks.get?chart_name=top&page=1&page_size=10&country=in&f_has_lyrics=1&apikey=${process.env.REACT_APP_MM_KEY}`
+        `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/chart.tracks.get?chart_name=top&page=1&page_size=10&country=us&f_has_lyrics=1&apikey=${process.env.REACT_APP__MM_KEY}`
       )
       .then((res) => {
         // console.log(res.data);
@@ -26,5 +26,5 @@ export const ContextController = ({ children }) => {
       .catch((err) => console.log(err));
   }, []);
 
-  return <Context.Provider value={state}>{children}</Context.Provider>;
+  return <Context.Provider value={[state, setState]}>{children}</Context.Provider>;
 };
